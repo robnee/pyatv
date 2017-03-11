@@ -133,8 +133,50 @@ class FakeAppleTV(web.Application):
         self._verify_auth_parameters(request)
         content = yield from request.content.read()
         parsed = dmap.parse(content, tag_definitions.lookup_tag)
-        self.last_button_pressed = dmap.first(parsed, 'cmbe')
+        self.last_button_pressed = self._convert_button(parsed)
         return web.Response(status=200)
+
+    @staticmethod
+    def _convert_button(data):
+        values = list(dmap.matches(data, 'cmbe'))
+        if values == [
+                'touchDown&time=0&point=20,275',
+                'touchMove&time=1&point=20,270',
+                'touchMove&time=2&point=20,265',
+                'touchMove&time=3&point=20,260',
+                'touchMove&time=4&point=20,255',
+                'touchMove&time=5&point=20,250',
+                'touchUp&time=6&point=20,250']:
+            return 'up'
+        elif values == [
+                'touchDown&time=0&point=20,250',
+                'touchMove&time=1&point=20,255',
+                'touchMove&time=2&point=20,260',
+                'touchMove&time=3&point=20,265',
+                'touchMove&time=4&point=20,270',
+                'touchMove&time=5&point=20,275',
+                'touchUp&time=6&point=20,275']:
+            return 'down'
+        elif values == [
+                'touchDown&time=0&point=75,100',
+                'touchMove&time=1&point=70,100',
+                'touchMove&time=2&point=65,100',
+                'touchMove&time=3&point=60,100',
+                'touchMove&time=4&point=55,100',
+                'touchMove&time=5&point=50,100',
+                'touchUp&time=6&point=50,100']:
+            return 'left'
+        elif values == [
+                'touchDown&time=0&point=50,100',
+                'touchMove&time=1&point=55,100',
+                'touchMove&time=2&point=60,100',
+                'touchMove&time=3&point=65,100',
+                'touchMove&time=4&point=70,100',
+                'touchMove&time=5&point=75,100',
+                'touchUp&time=6&point=75,100']:
+            return 'right'
+        else:
+            return values[0]
 
     @asyncio.coroutine
     def handle_artwork(self, request):

@@ -153,6 +153,26 @@ class FunctionalTest(AioHTTPTestCase):
         self.assertEqual(SESSION_ID, session_id)
 
     @unittest_run_loop
+    def test_button_up(self):
+        yield from self.atv.remote_control.up()
+        self.assertEqual(self.fake_atv.last_button_pressed, 'up')
+
+    @unittest_run_loop
+    def test_button_down(self):
+        yield from self.atv.remote_control.down()
+        self.assertEqual(self.fake_atv.last_button_pressed, 'down')
+
+    @unittest_run_loop
+    def test_button_left(self):
+        yield from self.atv.remote_control.left()
+        self.assertEqual(self.fake_atv.last_button_pressed, 'left')
+
+    @unittest_run_loop
+    def test_button_right(self):
+        yield from self.atv.remote_control.right()
+        self.assertEqual(self.fake_atv.last_button_pressed, 'right')
+
+    @unittest_run_loop
     def test_button_play(self):
         yield from self.atv.remote_control.play()
         self.assertEqual(self.fake_atv.last_button_pressed, 'play')
