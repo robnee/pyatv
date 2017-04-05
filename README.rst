@@ -4,11 +4,9 @@ A python client library for the Apple TV
 
 This is a python library for controlling and querying information from an Apple TV. It is async
 (python 3.4 syntax) and supports most of the commands that the regular Apple Remote app does as
-well as some additional iTunes commands, like changing the media position.
-
-As this library is still at an early development stage, functionality is still missing, bugs
-exist and API may change. Look at this as a "technical preview". API is not considered final
-until version 1.0 is released.
+well as some additional iTunes commands, like changing the media position. It implements the
+legacy DAAP-protocol and does not support features from the new MediaRemote.framework. Support
+for this might be added in the future if that protocol is ever fully reverse engineered.
 
 The MIT license is used for this library.
 
@@ -18,7 +16,7 @@ Features
 - Automatic discovery of devices (zeroconf/Bonjour)
 - Push updates
 - Remote control pairing
-- Most buttons (play, pause, next, previous, select, menu, top_menu)
+- Most buttons (play, pause, stop, next, previous, select, menu, top_menu)
 - Fetch artwork in PNG format
 - Currently playing (e.g. title, artist, album, total time, etc.)
 - Change media position
@@ -126,7 +124,7 @@ It is possible to use the reference CLI application as well:
     Other commands:
      - push_updates - Listen for push updates
 
-Type `atvremote --help` to list all supported commands.
+Type ``atvremote --help`` to list all supported commands.
 
 Missing features and improvements
 ---------------------------------
@@ -146,7 +144,7 @@ Tasks related to library features
 - Allow auto discovery stop after finding a device **DONE** (#19)
 - Better output for "playing" in atvremote **DONE** (#20)
 - Verify compatibility with python > 3.5 (tox) *Pending* (#18)
-- Fix exit code in atvremote
+- Fix exit code in atvremote **DONE**
 - Fix various TODOs in the code
 
 Other tasks
@@ -163,7 +161,7 @@ Other tasks
   - Manual in docs/
   - Add to readthedocs.io
 
-- Investigate support for additional operations (shuffle, repeat, etc.)
+- Investigate support for additional operations (shuffle, repeat, etc.) **DONE**
 
 Development
 -----------
@@ -178,12 +176,12 @@ environment and install everything needed for development:
     ./setup_dev_env.sh
     source bin/activate
 
-You can run the tests with `python setup.py test`. Also, make sure that
+You can run the tests with ``python setup.py test``. Also, make sure that
 pylint, flake8 and pydoc passes before committing. This is done automatically
-if you run just run `tox`.
+if you run just run ``tox``.
 
-When using `atvremote`, pass --developer to enable some developer friendly
-commands. You may also pass --debug to get better logging.
+When using ``atvremote``, pass ``--developer`` to enable some developer friendly
+commands. You may also pass ``--debug`` to get better logging.
 
 .. |Build Status| image:: https://travis-ci.org/postlund/pyatv.svg?branch=master
    :target: https://travis-ci.org/postlund/pyatv

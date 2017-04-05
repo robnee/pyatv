@@ -1,6 +1,19 @@
 CHANGES
 =======
 
+0.3.0 (2017-XX-XX)
+------------------
+
+Changes:
+
+- Fix atvremote exit codes
+- Support scanning for Apple TVs with home sharing disabled
+- Support for shuffle and repeat modes
+- Support for "stop" button
+- Multiple commands can be given to atvremote
+- Handle additional media kinds
+- Bump aiohttp to 1.3.5
+
 0.2.2 (2017-03-04)
 ------------------
 
